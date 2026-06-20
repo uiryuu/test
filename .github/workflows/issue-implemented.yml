@@ -25,7 +25,7 @@ jobs:
             // (a) Author closed their own issue -> skip (self-resolved / not-a-bug / etc.)
             if (closer === author) {
               core.info('Closed by the issue author — skipping.');
-              return core.setOutput('post', 'false');
+              return core.setOutput('post', 'true');
             }
 
             // (b) Closer left a comment around the time of closing -> skip (already explained).
