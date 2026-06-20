@@ -1,0 +1,29 @@
+name: Comment on implemented issues
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  issues: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    if: github.event.issue.state_reason == 'completed'
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                'This issue was closed as implemented. 🎉',
+                '',
+                'If you built IINA from source, the change is on the `develop` branch.',
+                'Otherwise it will ship in an upcoming release.'
+              ].join('\n')
+            });
+
